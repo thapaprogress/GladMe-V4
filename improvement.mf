@@ -1,0 +1,40 @@
+# GladME Studio: Evolution from V2/V3 to V4
+# Technical Improvement Report & Architectural Comparison
+
+[ABSTRACT]
+This report details the comprehensive transition of the GladME Studio Agentic IDE from its version 2/3 prototypes to the production-ready version 4.0.0.
+
+[BACKEND ARCHITECTURE]
+- API Framework: FastAPI (Modularized)
+- State Persistence: SQLAlchemy ORM
+- Configuration: Centralized .env
+- Execution: Docker Containerized Sandbox
+- LLM Access: Multi-Provider Router
+
+[FRONTEND DESIGN]
+- Monaco Editor Integration
+- Visual Workflow (React Flow)
+- Persistence: Chat & Logs
+- Theming: Unified Dark Mode
+
+[SECURITY]
+- JWT Authentication
+- RBAC (Role-Based Access Control)
+- Secure Token Storage
+
+[SANDBOXING]
+- Docker-based isolation (gladme-runner:latest)
+- Host system protection
+
+[AI ROUTING]
+- Fallback Chain: Ollama -> OpenAI -> Anthropic
+
+[ECOSYSTEM]
+- Skills System (security-scan, generate-docs)
+- MCP Server/Client Support
+
+[ROADMAP]
+- Streaming AI
+- Collaborative Editing
+- Native Desktop Wrapper
+- CI/CD Integration

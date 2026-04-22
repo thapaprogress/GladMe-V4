@@ -1,0 +1,118 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\title{GladME Studio: Evolution from V2/V3 to V4 \\ \large Technical Improvement Report \& Architectural Comparison}
+\author{Bishwajyoti Chaudhary \\ GladME Development Team}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report details the comprehensive transition of the GladME Studio Agentic IDE from its version 2/3 prototypes to the production-ready version 4.0.0. We highlight major architectural improvements, security enhancements, and the introduction of advanced features such as containerized sandboxing, multi-provider LLM routing, and a formalized skills system. The report serves as both a technical documentation for current developers and a comparative study of iterative software evolution.
+\end{abstract}
+
+\section{Introduction}
+GladME Studio is an Agentic Integrated Development Environment (IDE) designed to automate the software development lifecycle. Version 4 (V4) represents a paradigm shift in how the system handles user requests, executes code, and ensures security. While previous versions focused on the core FSM (Finite State Machine) logic of Plan-Code-Verify, V4 introduces a robust ecosystem around these pillars.
+
+\section{Comparative Analysis: V2/V3 vs V4}
+
+\subsection{Tech Stack \& Backend Architecture}
+The backend has evolved from a simple API server to a multi-layered service architecture.
+
+\begin{longtable}{@{}p{0.25\textwidth}p{0.35\textwidth}p{0.35\textwidth}@{}}
+\caption{Backend Comparison} \\
+\toprule
+\textbf{Feature} & \textbf{V2/V3 Implementation} & \textbf{V4 Improvements} \\ \midrule
+\endfirsthead
+\toprule
+\textbf{Feature} & \textbf{V2/V3 Implementation} & \textbf{V4 Improvements} \\ \midrule
+\endhead
+\bottomrule
+\endfoot
+API Framework & FastAPI (Monolithic) & FastAPI (Modularized via Routers) \\
+State Persistence & SQLite (Simple states) & SQLAlchemy ORM (9+ Relational Models) \\
+Configuration & Hardcoded constants & Centralized \texttt{.env} via \texttt{config.py} \\
+Execution & Local Subprocess (Unsafe) & Docker Containerized Sandbox (Secure) \\
+LLM Access & Direct local call (Ollama) & Multi-Provider Router with Failover \\
+\bottomrule
+\end{longtable}
+
+\subsection{Frontend Design \& User Experience}
+V4 introduces a high-fidelity dashboard built with Vite and React, replacing the simpler UI components of V2.
+
+\begin{itemize}
+    \item \textbf{Monaco Editor Integration:} High-performance code editing with syntax highlighting.
+    \item \textbf{Visual Workflow:} React Flow based FSM visualization that reflects project state in real-time.
+    \item \textbf{Persistence:} Chat history and logs are now persistent across sessions via database synchronization.
+    \item \textbf{Theming:} A unified design system with enhanced dark mode and responsive components.
+\end{itemize}
+
+\section{Major Functional Improvements}
+
+\subsection{Security & Authentication}
+V2 had no user identity management. V4 implements:
+\begin{enumerate}
+    \item \textbf{JWT Authentication:} Secure login and registration with token-based session management.
+    \item \textbf{RBAC:} Role-Based Access Control allowing for Administrative and Developer roles.
+    \item \textbf{Token Storage:} Shifted to secure headers for API communication.
+\end{enumerate}
+
+\subsection{Execution Sandboxing (Safe Coding)}
+The most critical reliability upgrade in V4 is the \textbf{Docker Sandbox}. 
+\begin{itemize}
+    \item \textbf{V2/V3:} User-generated code ran directly on the host machine.
+    \item \textbf{V4:} Code executes in a disposable Docker container (\texttt{gladme-runner:latest}), isolating the host system from malicious or buggy scripts.
+\end{itemize}
+
+\subsection{Intelligence & Fallback Routing}
+V4 introduces the \texttt{LLMRouter}, which ensures zero downtime for AI features:
+\begin{enumerate}
+    \item \textbf{Primary:} Local execution via Ollama (Gemma4).
+    \item \textbf{Secondary:} Fallback to OpenAI (GPT-4o-mini).
+    \item \textbf{Tertiary:} Fallback to Anthropic (Claude 3.5 Sonnet).
+    \item \textbf{Quaternary:} Rule-based template fallback.
+\end{enumerate}
+
+\section{The Skills & MCP Ecosystem}
+V4 introduces a modular architecture for extending IDE capabilities:
+\begin{itemize}
+    \item \textbf{Skills System:} Standardized modules for specific tasks like \texttt{security-scan} and \texttt{generate-docs}.
+    \item \textbf{Model Context Protocol (MCP):} Native support for MCP servers and clients, allowing GladME to interact with external tools and data sources.
+\end{itemize}
+
+\section{Workflow Comparison}
+The user journey has been refined to include validation and trust metrics.
+
+\begin{longtable}{@{}p{0.3\textwidth}p{0.65\textwidth}@{}}
+\caption{Workflow Evolution} \\
+\toprule
+\textbf{Phase} & \textbf{Evolution in V4} \\ \midrule
+1. Initialization & Added Auth gate; Multi-project selection sidebar. \\
+2. Planning & LLM Router ensures plans are generated even if local AI fails. \\
+3. Implementation & Real-time Monaco editor; State hashing for provenance. \\
+4. Verification & FSM logic + Integrated Pytest execution in Docker. \\
+5. Trust & Introduction of TrustPanel (SBOM, Artifact Hashes). \\
+\bottomrule
+\end{longtable}
+
+\section{Future Roadmap: Toward V5}
+\begin{itemize}
+    \item \textbf{Streaming AI:} Token-by-token streaming for real-time responsiveness.
+    \item \textbf{Collaborative Editing:} CRDT-based multi-user workspace.
+    \item \textbf{Native Wrapper:} Desktop distribution via Tauri/Electron.
+    \item \textbf{CI/CD Integration:} Automated deployments from the Studio.
+\end{itemize}
+
+\section{Conclusion}
+GladME Studio V4 is a significant leap forward in creating a reliable, secure, and intelligent Agentic IDE. By moving from a "prototype" mindset in V2 to a "production-ready" architecture in V4, the system now provides a stable foundation for complex software engineering tasks.
+
+\end{document}

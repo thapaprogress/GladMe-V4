@@ -6,89 +6,107 @@ GladME Studio V4 is a high-fidelity, production-ready Agentic Integrated Develop
 
 ![GladME Studio V4 Banner](https://raw.githubusercontent.com/thapaprogress/GladMe-V4/main/screenshots/banner.png)
 
-## 🌟 What's New in V4?
+## 🌟 Key Features
 
-V4 is a major evolution from previous versions, focusing on **Security**, **Reliability**, and **Developer Productivity**.
+### 1. Multi-Modal AI Orchestration
+*   **Intelligent Routing:** Automatically switches between Ollama (Local), OpenAI (GPT-4o), and Anthropic (Claude 3.5 Sonnet) based on availability and task complexity.
+*   **Vibe Coding:** A persistent, context-aware chat interface that allows you to "vibe" with your code—refactoring, debugging, and evolving projects in real-time.
 
-*   **JWT Authentication & RBAC:** Secure project access with role-based permissions.
-*   **Docker Containerized Sandbox:** Safe code execution in isolated environments (Pytest + Coverage integrated).
-*   **LLM Fallback Routing:** Intelligent routing between Ollama, OpenAI, and Anthropic to ensure zero downtime.
-*   **Vibe Coding (Chat):** Persistent chat interface for real-time code evolution.
-*   **MCP Support:** Native integration with the Model Context Protocol (Server & Client).
-*   **Trust & Provenance:** Automated SBOM generation and artifact hashing for compliance.
+### 2. Secure Execution Sandbox
+*   **Docker Isolation:** All generated code and tests run within a secure `gladme-runner` container, protecting your host machine.
+*   **Automated Testing:** Integrated Pytest suite with real-time coverage reporting and failure diagnostics.
+
+### 3. Visual Engineering
+*   **Interactive Workflow Mapping:** Visualize your project architecture and data flow using React Flow.
+*   **Monaco Editor Integration:** Industry-standard code editing with syntax highlighting and intelligent completions.
+
+### 4. Trust & Compliance
+*   **Automated SBOM:** Generates a Software Bill of Materials for every project version.
+*   **Provenance Tracking:** Cryptographic hashing of artifacts (Goal, Logic, Plan, Code) to ensure integrity and compliance.
 
 ## 🏗️ Architecture
 
-GladME V4 follows a modern client-server architecture:
+- **Backend:** FastAPI (Python 3.12+), SQLAlchemy (ORM), Docker SDK, SlowAPI (Rate Limiting).
+- **Frontend:** React 18 (Vite), Tailwind CSS, Monaco Editor, React Flow, Recharts.
+- **Protocol:** Native Support for **Model Context Protocol (MCP)**.
 
-*   **Backend:** FastAPI (Python 3.12+) with SQLAlchemy ORM and Docker SDK.
-*   **Frontend:** Vite + React 18 with Monaco Editor, React Flow, and Recharts.
-*   **Intelligence:** Multi-provider LLM Router (Ollama, OpenAI, Anthropic).
-
-## 🚀 Quick Start
+## 🚀 Installation & Setup
 
 ### Prerequisites
+- [Python 3.12+](https://www.python.org/downloads/)
+- [Node.js 18+](https://nodejs.org/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Ollama](https://ollama.com/) (Optional)
 
-*   [Python 3.12+](https://www.python.org/downloads/)
-*   [Node.js 18+](https://nodejs.org/)
-*   [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Running)
-*   [Ollama](https://ollama.com/) (Optional, for local AI)
+### Step 1: Clone & Environment Setup
+```bash
+git clone https://github.com/thapaprogress/GladMe-V4.git
+cd GladMe-V4
+```
 
-### 1. Backend Setup
-
+### Step 2: Backend Configuration
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate   # Windows
-
+source venv/bin/activate  # Windows: .\venv\Scripts\activate
 pip install -r requirements.txt
+
+# Configure environment
 cp .env.example .env
-# Edit .env and set your JWT_SECRET and API Keys
+# Open .env and add your JWT_SECRET and LLM API keys
 ```
 
-### 2. Build Docker Runner
-
+### Step 3: Docker Sandbox Initialization
 ```bash
 cd backend/sandbox
 docker build -t gladme-runner:latest -f Dockerfile.runner .
 ```
 
-### 3. Frontend Setup
+### Step 4: Frontend Installation
+```bash
+cd ../../frontend
+npm install
+```
 
+## 🏃 Running the Application
+
+### Option A: One-Click Launch (Windows)
+Simply double-click the `start.bat` file in the root directory. It will automatically start both the Backend and Frontend servers.
+
+### Option B: Manual Launch
+**Terminal 1 (Backend):**
+```bash
+cd backend
+source venv/bin/activate
+python main.py
+```
+
+**Terminal 2 (Frontend):**
 ```bash
 cd frontend
-npm install
 npm run dev
 ```
 
-### 4. Launch
-
-Run both servers and visit `http://localhost:5173`.
+Visit: `http://localhost:5173` (or the port shown in your terminal).
 
 ## 📸 Screenshots
 
 | Dashboard | Visual Workflow |
 | :---: | :---: |
-| ![Dashboard](https://raw.githubusercontent.com/thapaprogress/GladMe-V4/main/screenshots/dashboard.png) | ![Workflow](https://raw.githubusercontent.com/thapaprogress/GladMe-V4/main/screenshots/workflow.png) |
+| ![Dashboard](screenshots/dashboard.png) | ![Workflow](screenshots/workflow.png) |
 
 | Vibe Chat | Trust & Provenance |
 | :---: | :---: |
-| ![Chat](https://raw.githubusercontent.com/thapaprogress/GladMe-V4/main/screenshots/chat.png) | ![Trust](https://raw.githubusercontent.com/thapaprogress/GladMe-V4/main/screenshots/trust.png) |
+| ![Chat](screenshots/chat.png) | ![Trust](screenshots/trust.png) |
 
-## 🛠️ Tech Stack
+> *Note: Please ensure you place actual screenshots in the `screenshots/` directory for them to render correctly.*
 
-*   **Frameworks:** FastAPI, React (Vite)
-*   **UI Components:** Tailwind CSS, Framer Motion
-*   **Editor:** Monaco Editor
-*   **Diagrams:** React Flow
-*   **Database:** SQLite / PostgreSQL (via SQLAlchemy)
-*   **Containerization:** Docker
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 📄 Documentation
+- [Improvement Report (PDF)](v4_improvement.pdf)
+- [V4 Evolution Overview](improvement.md)
+- [Developer Walkthrough](WALKTHROUGH.md)
 
 ---
 
 Built with ❤️ by the GladME Team.
+For more information, visit [GladMe.dev](https://gladme.dev).

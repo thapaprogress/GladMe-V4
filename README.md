@@ -4,7 +4,7 @@
 
 GladME Studio V4 is a high-fidelity, production-ready Agentic Integrated Development Environment. It automates the software development lifecycle by integrating multi-modal AI agents with a secure, containerized execution environment.
 
-![GladME Studio V4 Banner](https://raw.githubusercontent.com/thapaprogress/GladMe-V4/main/screenshots/banner.png)
+![GladME Studio V4 Banner](screenshots/banner.png)
 
 ## 🌟 Key Features
 
